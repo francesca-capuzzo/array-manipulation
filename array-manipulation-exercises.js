@@ -182,16 +182,16 @@ console.log(sumAll(testArray));
 
 ///////////////////////////////////////////////////////////
 
-function sum(first, second) {
-    return first + second;
+function sum(previous, current) {
+    return previous + current;
 }
 
 
-function product(first, second) {
-    return first * second;
+function product(previous, current, index) {
+    return previous * current;
 }
 
-function reduce(arrayToReduce, aggregationFunction, startingElement) {  //starting Element ha un default
+function reduce(arrayToReduce, aggregationFunction, startingElement) {  //starting Element ha un default (è l'index che parte da 0 oppure dal numero specificato)
     let result = startingElement;
     for (const element of arrayToReduce) {
         result = aggregationFunction(result, element);                  //aggregationFunction = sum()
@@ -226,7 +226,7 @@ function reduce(arrayToReduce, aggregationFunction, startingElement) {  //starti
 
 function sumEvenIndex(previous, current, index) {
     if (index % 2 === 0) {
-        previous + current;
+        return previous + current;
     } else {
         return previous;
     }
@@ -296,6 +296,7 @@ function dividiStringhe(previous, current) {                   //al primo giro d
             previous[0] = [];                                  //PREVIOUS[0] è un array
         }
         previous[0].push(current);
+    } else {   
         if (!previous[1]) {
             previous[1] = [];
         }
@@ -317,33 +318,33 @@ function sumBySign(previous, current) {
             previous.sumOfPositive += current;
         }
     } else {
-        if (previous.sumOfNegative) {
-            previous.sumOfNegative += current;
+        if (previous.sumOfNegatives) {
+            previous.sumOfNegatives += current;
         } else {
-            previous.sumOfNegative = 0;
-            previous.sumOfNegative += current;
+            previous.sumOfNegatives = 0;
+            previous.sumOfNegatives += current;
         }
     }
     return previous;
 }
 
-// function sumBySign(previous, current) {
-//     if (! previous.sumOfPositive) {
-//         previous.sumOfPositive = 0;
-//     }
-//     previous.sumOfPositive += current;
-// } else {
+function sumBySign(previous, current) {
+    if (current >= 0) {
+        if (!previous.sumOfPositive) {
+            previous.sumOfPositive = 0;
+        }
+        previous.sumOfPositive += current;
+    } else {
+        if (!previous.sumOfNegatives) {
+            previous.sumOfNegatives = 0;
+        }
+        previous.sumOfNegative += current;
+    }
+    return previous;
+}
 
-//     if (!previous.sumOfNegative) {
-//         previous.sumOfNegative = 0;
-//     }
-//     previous.sumOfNegative += current;
-// }
-// return previous;
 
-
-
-// console.log(testArray.reduce(sumBySign,{}));
+console.log(testArray.reduce(sumBySign,{}));
 
 
 
@@ -360,3 +361,5 @@ function orderString(previous, current, index) {
 
 
 console.log(testArray3.reduce(orderString));
+
+console.log(testArray3.reduce((p, c, i) => i % 2 === 0 ? p + " " + c : p));

@@ -363,3 +363,39 @@ function orderString(previous, current, index) {
 console.log(testArray3.reduce(orderString));
 
 console.log(testArray3.reduce((p, c, i) => i % 2 === 0 ? p + " " + c : p));
+
+console.log(testArray3.reduce((p, c, i) => i % 2 !== 0 ? p : p + " " + c));
+
+//questa funzione non ha elemento iniziale, quindi prende "la" come primo elemento. (PREVIOUS). E il CURRENT è sempre il secondo elemento ("vergogna") a index 1 perchè il previous lo prende sempre e comunque (quello a index 0)
+
+
+function removeOddAndConcatenate(previous, current, index) {            //(p,c,i)
+    let tempString = previous;
+    if (index % 2 === 0) {
+        tempString = tempString + " " + current;
+    }
+    return tempString;
+}
+
+function removeOddAndConcatenate2(previous, current, index) {            //(p,c,i)
+    let tempString = previous;
+    if (index % 2 !== 0) { 
+        return tempString;
+    } else {
+        tempString = tempString + " " + current;
+        return tempString
+    }
+}
+
+function removeOddAndConcatenate3(previous, current, index) {            //(p,c,i)
+    if (index % 2 !== 0) { 
+        return previous;
+    } else {
+        return previous + " " + current;
+    }
+}
+
+console.log(testArray3.reduce(removeOddAndConcatenate));
+
+console.log(testArray3.reduce(removeOddAndConcatenate, " "));
+//se invece gli do uno starting element "" (stringa vuota), "la" diventa il current perchè il previous è una stringa vuota.. il resto funzionerà ugualmente ma avrà uno spazio vuoto all'inizio della
